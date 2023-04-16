@@ -1,0 +1,7 @@
+{
+    "name": "units",
+    "files": {
+        "lua/packages/units/package.lua": "",
+        "lua/packages/units/init.lua": ""
+    }
+}
