@@ -28,10 +28,9 @@ function Set( unitsName, func )
 end
 
 function Get( str, ... )
-    if ( type( str ) == "number" ) then return str end
-    if ( type( str ) ~= "string" ) then return 0 end
+    if type( str ) == "number" then return str end
+    if type( str ) ~= "string" then return 0 end
 
-    -- TODO: Improve pattern
     local digits, unitsName = string.match( string.lower( str ), "%s*([%d%.]+)%s*([%a%%]+)%s*" )
     if not digits then return 0 end
 
