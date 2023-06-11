@@ -6,7 +6,6 @@ local math = math
 
 -- Variables
 local util_ScreenResolution = util.ScreenResolution
-local packageName = gpm.Package:GetIdentifier()
 local hook_Add = hook.Add
 local tonumber = tonumber
 local IsValid = IsValid
@@ -155,5 +154,5 @@ local function updateViewPort( width, height )
     end
 end
 
-hook_Add( "ScreenResolutionChanged", packageName, updateViewPort )
+hook_Add( "ScreenResolutionChanged", "ViewPortUpdate", updateViewPort )
 updateViewPort( util_ScreenResolution() )
