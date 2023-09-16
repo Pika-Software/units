@@ -1,5 +1,5 @@
 name = "units"
-version = 000200
+version = "1.0.0"
 init = {
     ["client"] = "init.lua"
 }
