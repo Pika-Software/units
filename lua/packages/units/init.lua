@@ -1,14 +1,14 @@
 install( "packages/glua-extensions", "https://github.com/Pika-Software/glua-extensions" )
-
--- Libraries
-local string = string
-local math = math
-
--- Variables
+local string_lower = string.lower
+local string_match = string.match
 local table_Empty = table.Empty
+local math_floor = math.floor
+local math_max = math.max
+local math_min = math.min
 local tonumber = tonumber
 local IsValid = IsValid
 local type = type
+local lib = {}
 
 -- Functions
 local functions = {}
@@ -27,7 +27,7 @@ end
 
 -- Cache
 local cache = {}
-function ClearCache()
+function lib.ClearCache()
     table_Empty( cache )
 end
 
@@ -49,7 +49,7 @@ function lib.Get( str, ... )
         return 0
     end
 
-    local digits, unitsName = string.match( string.lower( str ), "%s*([%d%.]+)%s*([%a%%]+)%s*" )
+    local digits, unitsName = string_match( string_lower( str ), "%s*([%d%.]+)%s*([%a%%]+)%s*" )
     if not digits then
         cache[ str ] = 0
         return 0
@@ -63,14 +63,14 @@ function lib.Get( str, ... )
 
     local func = functions[ unitsName ]
     if not func then
-        local result = math.max( 1, math.floor( number ) )
+        local result = math_max( 1, math_floor( number ) )
         cache[ str ] = result
         return result
     end
 
     local result = func( number, ... )
     if not result then result = number end
-    result = math.max( 1, math.floor( result ) )
+    result = math_max( 1, math_floor( result ) )
     cache[ str ] = result
     return result
 end
@@ -144,7 +144,7 @@ lib.SetFunction( "%min", function( num, panel )
     if not IsValid( parent ) then return 0 end
 
     local width, height = parent:GetSize()
-    return ( math.min( width, height ) / 100 ) * num
+    return ( math_min( width, height ) / 100 ) * num
 end )
 
 -- Percentage of maximum panel side size
@@ -155,7 +155,7 @@ lib.SetFunction( "%max", function( num, panel )
     if not IsValid( parent ) then return 0 end
 
     local width, height = parent:GetSize()
-    return ( math.max( width, height ) / 100 ) * num
+    return ( math_max( width, height ) / 100 ) * num
 end )
 
 local vh, vw = 0, 0
@@ -212,3 +212,5 @@ hook.Add( "ScreenResolutionChanged", "Recompute", function( width, height )
 end )
 
 lib.Recompute( util.ScreenResolution() )
+units = lib
+return lib
